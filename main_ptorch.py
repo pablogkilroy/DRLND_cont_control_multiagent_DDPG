@@ -9,13 +9,8 @@ fileDir = os.path.dirname(os.path.realpath('__python__'))
 
 print(fileDir)
 
-#print(fileDir)
 
-#filename = os.path.join(fileDir,'\python')
-
-# Directory with files for Unity
-
-filename = fileDir.replace("\DRLND_continuous-control project-pytorch","\DRLND_continuous-control project-pytorch\python")
+filename = fileDir.replace("\DRLND_Cont_Control_Multiagent-pytorch","\DRLND_Cont_Control_Multiagent-pytorch\python")
 
 print('file',filename)
 
@@ -29,19 +24,10 @@ sys.path.append(filename)
 from python.unityagents import UnityEnvironment
 import numpy as np
 
-print('1')
-#env = UnityEnvironment(file_name=r'C:\Users\pgarcia\Documents\GitHub\Udacity-Reinforcement-Learning\deep-reinforcement-learning-master\DRLND_continuous-control project\Reacher_Windows_x86_64\Reacher.exe')
-env = UnityEnvironment(file_name=r'C:\Users\pgarcia\Documents\GitHub\Udacity-Reinforcement-Learning\deep-reinforcement-learning-master\DRLND_continuous-control project-pytorch\R_20\Reacher_Windows_x86_64\Reacher.exe')
-print('2')
+env = UnityEnvironment(file_name=r'C:\Users\pgarcia\Documents\GitHub\Udacity-Reinforcement-Learning\deep-reinforcement-learning-master\DRLND_Cont_Control_Multiagent-pytorch\Tennis_Windows_x86_64\tennis.exe')
+
 brain_name = env.brain_names[0]
 brain = env.brains[brain_name]
-
-#env = UnityEnvironment(file_name=r'C:\Users\pgarcia\Documents\GitHub\Udacity-Reinforcement-Learning\deep-reinforcement-learning-master\DRLND_continuous-control project\Reacher_Windows_x86_64\Reacher.exe')
-#env = UnityEnvironment(file_name=r'C:\Users\pgarcia\Documents\GitHub\Udacity-Reinforcement-Learning\deep-reinforcement-learning-master\DRLND_continuous-control project\Reacher_Windows_x86_64\Reacher.exe')
-
-# get the default brain
-#brain_name = env.brain_names[0]
-#brain = env.brains[brain_name]
 
 # reset the environment
 env_info = env.reset(train_mode=True)[brain_name]
@@ -60,6 +46,8 @@ state_size = states.shape[1]
 print(state_size)
 print('There are {} agents. Each observes a state with length: {}'.format(states.shape[0], state_size))
 print('The state for the first agent looks like:', states[0])
+
+
 #import gym
 import random
 import torch
@@ -71,10 +59,12 @@ import matplotlib.pyplot as plt
 from ddpg_agent import Agent
 
 print('state size, action size', state_size, action_size)
-agent = Agent(state_size, action_size, random_seed=5)
+agent = Agent(state_size, action_size, num_agents, random_seed=5)
 
-def ddpg(n_episodes=200, max_t=1000, print_every=1, plot_every=25):
+def ddpg(n_episodes=2300, max_t=1000, print_every=100, plot_every=3000):
     scores_deque = deque(maxlen=print_every)
+    scores_average = []
+    scores_average.append(0) #initialize first element
     scores = []
     for i_episode in range(1, n_episodes+1):
         env_info = env.reset(train_mode=True)[brain_name]
@@ -84,7 +74,7 @@ def ddpg(n_episodes=200, max_t=1000, print_every=1, plot_every=25):
         score = 0
         
         for t in range(max_t):
-            action = agent.act(state)
+            action = agent.act(state, i_episode, scores_average)
             env_info = env.step(action)[brain_name] 
             next_state = env_info.vector_observations
             #reward = env_info.rewards[0] 
@@ -99,25 +89,33 @@ def ddpg(n_episodes=200, max_t=1000, print_every=1, plot_every=25):
             #print('reward size', reward[0:2])
             #print('done size', done[0:2])
             #print('t',t)
+            #print('done', done)
             #next_state, reward, done, _ = env.step(action)
+            #print('state[0], action[0], reward[0], done[0', state[0], action[0], reward[0], done[0])
+            #if i_episode > 10:
+            #    pause = input('press any key')
             agent.step(state, action, reward, next_state, done)
             state = next_state
-            score += np.mean(reward)
+            # score += np.mean(reward) #collaborative reward
+            score += np.amax(reward)  #competitive reward
             if done[0]:
                 break 
         scores_deque.append(score)
+        scores_average.append(np.mean(scores_deque))
         scores.append(score)
-        print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_deque)), end="")
+        decay = (1/2)**(scores_average[i_episode-1]/.1)
+        print('\rEpisode {}\tScore: {:.2f}\tMaxStep: {}\tdecay: {:.2f}'.format(i_episode, scores[i_episode-1], t, decay))
         torch.save(agent.actor_local.state_dict(), 'checkpoint_actor.pth')
         torch.save(agent.critic_local.state_dict(), 'checkpoint_critic.pth')
         if i_episode % print_every == 0:
-            print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_deque)))
+            print('\rEpisode {}\tAverage 100 Score: {:.2f}'.format(i_episode, np.mean(scores_deque)))
             #print('\rEpisode {}\tEpisode Score: {:.2f}'.format(i_episode, scores[i_episode-1]))
         
         if i_episode % plot_every == 0:
             fig = plt.figure()
             ax = fig.add_subplot(111)
             plt.plot(np.arange(1, len(scores)+1), scores)
+            plt.plot(np.arange(1, len(scores)+1), scores_average[:-1], 'g')
             plt.ylabel('Score')
             plt.xlabel('Episode #')
             plt.show()

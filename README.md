@@ -5,7 +5,7 @@ Project 2: Continuous Learning
 
 ##Introduction
 
-For this project, we train a 4-DOF robot to follow a target
+For this project, we train a two tennis agents to play a match
 
 Trained Agent
 

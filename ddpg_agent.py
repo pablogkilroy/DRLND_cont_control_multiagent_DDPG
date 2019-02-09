@@ -16,15 +16,15 @@ TAU = 1e-3              # for soft update of target parameters
 LR_ACTOR = 1e-3         # learning rate of the actor 
 LR_CRITIC = 1e-3        # learning rate of the critic
 WEIGHT_DECAY = 0        # L2 weight decay
-UPDATE_RATE = 20         # update frequency
-UPDATE_TIMES = 20      # number of updates 
+UPDATE_RATE = 2         # update frequency
+UPDATE_TIMES = 2      # number of updates 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 class Agent():
     """Interacts with and learns from the environment."""
     
-    def __init__(self, state_size, action_size, random_seed):
+    def __init__(self, state_size, action_size, num_agents, random_seed):
         """Initialize an Agent object.
         
         Params
@@ -33,6 +33,7 @@ class Agent():
             action_size (int): dimension of each action
             random_seed (int): random seed
         """
+        self.num_agents = num_agents
         self.state_size = state_size
         self.action_size = action_size
         self.seed = random.seed(random_seed)
@@ -59,7 +60,7 @@ class Agent():
     def step(self, state, action, reward, next_state, done):
         """Save experience in replay memory, and use random sample from buffer to learn."""
         # Save experience / reward
-        for i in range(20):
+        for i in range(self.num_agents):
             state1, action1, reward1, next_state1, done1 = state[i], action[i], reward[i], next_state[i], done[i]
         #print('next state1', next_state[0:2])
         #print('state1', state[0:2])
@@ -87,7 +88,7 @@ class Agent():
                     #print('experiences', np.shape(experiences))
                     self.learn(experiences, GAMMA)      
 
-    def act(self, state, add_noise=True):
+    def act(self, state, i_episode, scores_average, add_noise=True):
         """Returns actions for given state as per current policy."""
         state = torch.from_numpy(state).float().to(device)
         self.actor_local.eval()
@@ -95,7 +96,7 @@ class Agent():
             action = self.actor_local(state).cpu().data.numpy()
         self.actor_local.train()
         if add_noise:
-            action += self.noise.sample()
+            action += self.noise.sample(i_episode, scores_average)
         return np.clip(action, -1, 1)
 
     def reset(self):
@@ -180,17 +181,21 @@ class OUNoise:
         self.sigma = sigma
         self.seed = random.seed(seed)
         self.reset()
+        #self.decay = (1/2)**(i_episode/500)
 
     def reset(self):
         """Reset the internal state (= noise) to mean (mu)."""
         self.state = copy.copy(self.mu)
 
-    def sample(self):
+    def sample(self, i_episode, scores_average):
         """Update internal state and return it as a noise sample."""
+        #decay = (1/2)**(i_episode/2000)
+        decay = (1/2)**(scores_average[i_episode-1]/.1)  #cut noise by half every 0.1 average score
+        #decay = 1
         x = self.state
         #dx = self.theta * (self.mu - x) + self.sigma * np.array([random.standard_normal() for i in range(len(x))])
         dx = self.theta * (self.mu - x) + self.sigma *np.random.standard_normal(x.size)
-        self.state = x + dx
+        self.state = x + dx * decay
         return self.state
 
 class ReplayBuffer:
