@@ -47,9 +47,14 @@ The following folders are part of the repository:
 
 ## Instructions
 
-1. Execute the main.py file. 
-2. A plot of the rewards appears every 25 episodes. This can be changed in main.py in the function
-def ddpg(n_episodes=200, max_t=1000, print_every=1, plot_every=25):
+1. Training model - Execute the main.py file. 
+
+- A plot of the rewards appears every 25 episodes. This can be changed in main_ptorch in the function:
+
+>def ddpg(n_episodes=200, max_t=1000, print_every=1, plot_every=25)
+
+3. Inference model - Execute inference_model.py
+
 
 
 
