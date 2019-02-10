@@ -5,6 +5,7 @@
 The environment is designed for 2 agents playing tennis. The each have 2 possible actions (up/down and away/close to net)
 with 8 observations per agents stacked in 3 observations over three consecutive steps. 
 
+```
 Unity Academy name: Academy
         Number of Brains: 1
         Number of External Brains : 1
@@ -22,7 +23,7 @@ Unity brain name: TennisBrain
 Number of agents: 2
 Size of each action: 2
 There are 2 agents. Each observes a state with length: 24
-
+```
 
 ## Learning Algorithm
 
