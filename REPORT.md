@@ -1,5 +1,30 @@
 # Report
 
+
+## Environment
+
+The environment is designed for 2 agents playing tennis. The each have 2 possible actions (up/down and away/close to net)
+with 8 observations per agents stacked in 3 observations over three consecutive steps. 
+
+Unity Academy name: Academy
+        Number of Brains: 1
+        Number of External Brains : 1
+        Lesson number : 0
+        Reset Parameters :
+
+Unity brain name: TennisBrain
+        Number of Visual Observations (per agent): 0
+        Vector Observation space type: continuous
+        Vector Observation space size (per agent): 8
+        Number of stacked Vector Observation: 3
+        Vector Action space type: continuous
+        Vector Action space size (per agent): 2
+        Vector Action descriptions: ,
+Number of agents: 2
+Size of each action: 2
+There are 2 agents. Each observes a state with length: 24
+
+
 ## Learning Algorithm
 
 The learning algorithm is based on a Actor Critic (DDPG)
@@ -27,11 +52,6 @@ Update Actor and Critic network
 
 - Update Actor network based on -grad(QPredicted)
 
-The environment
-
-- 2 action inputs
-- 24 state observations
-
 Actor Network
 
 - Inout 33 state observations
@@ -42,11 +62,15 @@ Actor Network
 
 Critic Network
 
-- Inout 33 state observations; 4 actions
+- Input 24 state observations; 2 actions
 - 2 layers with 400 and 300 neurons
 - Batch normalization after first layer
 - Two RELU activation functions
 - Fully connected layer to single output using RELU activation
+
+
+
+
 
 
 
