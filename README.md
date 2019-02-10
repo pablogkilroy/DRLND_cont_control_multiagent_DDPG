@@ -12,11 +12,11 @@ For this project, we train a two tennis agents to play a match
 
 Trained Agent
 
-A reward of is provided which us proportional to the distance between the robot end-effector and the target
+The environment is designed for 2 agents playing tennis. The each have 2 possible actions (up/down and away/close to net)
+with 8 observations per agents stacked in 3 observations over three consecutive steps. 
 
-The state space has 24 dimensions and contains the robot's position, velocity, acceleration, etc
-
-The actions has two dimensions and consists of the horizontal and vertical position of the racket
+There is a positive reward of is every time the ball falls within the other agent's court. 
+There is a negative reqard when the ball is missed or it is sent outside the court.
 
 The task is episodic, and in order to solve the environment, the agent must get an average score of +0.5 over 100 consecutive episodes.
 
