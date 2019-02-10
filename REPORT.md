@@ -107,7 +107,7 @@ A previous experiment with no noise decay resulted in significant worse performa
 
 Below you can see video of the trained model 
 
-![Experiment%207-15.gif](attachment:Experiment%207-15.gif)
+![Experiment%207-15.gif](Experiment_7-15.gif)
 
 
 
