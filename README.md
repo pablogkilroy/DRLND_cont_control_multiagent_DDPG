@@ -1,7 +1,7 @@
 # DRLND_continuous-control-project-pytorch
 
 
-Project 2: Continuous Learning
+(Experiment 7-15.gif)
 
 ##Introduction
 
