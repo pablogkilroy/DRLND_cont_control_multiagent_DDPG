@@ -1,6 +1,9 @@
 # DRLND_continuous-control-project-pytorch
 
 
+This is a trained model for a tennis game with two independent agents. It has an average score of 2 over 100 episodes. 
+You can get more details on the model and results in the REPORT file.
+
 ![](Experiment_7-15.gif)
 
 ## Introduction
@@ -11,11 +14,11 @@ Trained Agent
 
 A reward of is provided which us proportional to the distance between the robot end-effector and the target
 
-The state space has 33 dimensions and contains the robot's position, velocity, acceleration, etc
+The state space has 24 dimensions and contains the robot's position, velocity, acceleration, etc
 
-The actions has four dimensions and consists of the torques for each of the joints in the robot
+The actions has two dimensions and consists of the horizontal and vertical position of the racket
 
-The task is episodic, and in order to solve the environment, the agent must get an average score of +30 over 100 consecutive episodes.
+The task is episodic, and in order to solve the environment, the agent must get an average score of +0.5 over 100 consecutive episodes.
 
 ## Getting started
 
@@ -28,8 +31,8 @@ The repository contains the following files:
 
 The following folders are part of the repository:
 - python: Contains the unity support files necessary to run the unity applications
-- Reacher_Windows_x86_64: The reacher.exe unity applicaiton is used to run a single agent
-- R_20: The reached.exe unity application is used to run 20 agents
+- Tennis_Windows_x86_64: The reacher.exe unity applicaiton is used to run a single agent
+- tennis: The reached.exe unity application is used to run 20 agents
 
 2. Create a virtual environment using Anaconda prompt 
 (for windows environment) 
