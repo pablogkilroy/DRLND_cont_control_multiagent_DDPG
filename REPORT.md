@@ -1,6 +1,5 @@
 # Report
 
-
 ## Environment
 
 The environment is designed for 2 agents playing tennis. The each have 2 possible actions (up/down and away/close to net)
@@ -52,6 +51,8 @@ Update Actor and Critic network
 
 - Update Actor network based on -grad(QPredicted)
 
+## Network
+
 Actor Network
 
 - Inout 33 state observations
@@ -67,11 +68,6 @@ Critic Network
 - Batch normalization after first layer
 - Two RELU activation functions
 - Fully connected layer to single output using RELU activation
-
-
-
-
-
 
 
 ## Model and Hyperparameters
@@ -104,14 +100,16 @@ UPDATE_RATE = 2         # update frequency
 UPDATE_TIMES = 2      # number of updates 
 
 
-- Noise:
+## Noise
 
-Ornstein-Uhlenbeck process
-mu=0., theta=.15, sigma=0.2
+Handling the noise is a critical factor in the performance of the model. I tried two options:
 
-- Noise decay: Introduced a fuction that reduces noise as reward increases. This seems to make learning more stable and faster. 
+- Constant noise using Ornstein-Uhlenbeck algorithm (mu=0., theta=.15, sigma=0.2)
 
-decay = (1/2)**(scores_average[i_episode-1]/.1)
+- Noise decay on Ornstein-Uhlenbeck algorithm (mu=0., theta=.15, sigma=0.2): Introduced a fuction that reduces noise as reward increases. 
+This seems to make learning more stable and faster. 
+
+> decay = (1/2)**(scores_average[i_episode-1]/.1)
 
 
 ## Plot of Rewards
