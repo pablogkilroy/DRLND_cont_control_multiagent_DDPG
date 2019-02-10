@@ -8,7 +8,7 @@ You can get more details on the model and results in the REPORT file.
 
 ## Introduction
 
-For this project, we train a twoagents to play a match of tennis using a DDPG algorithm. 
+For this project, two agents are trained to play a match of tennis using a DDPG algorithm. 
 
 The environment is designed for 2 agents playing tennis. The each have 2 possible actions (up/down and away/close to net)
 with 8 observations per agents stacked in 3 observations over three consecutive steps. 
