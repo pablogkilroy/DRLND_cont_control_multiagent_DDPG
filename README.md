@@ -4,7 +4,7 @@
 This is a trained model for a tennis game with two independent agents. It has an average score of 2 over 100 episodes. 
 You can get more details on the model and results in the REPORT file.
 
-![](Experiment_7-15.gif)
+![](results/Experiment_7-15.gif)
 
 ## Introduction
 
