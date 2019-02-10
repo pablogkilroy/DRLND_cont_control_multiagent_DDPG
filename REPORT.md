@@ -94,12 +94,12 @@ decay = (1/2)**(scores_average[i_episode-1]/.1)
 
 The rewards averaged over 100 episodes reach 0.5 at Eposide 1750. The reward value peaks at 2.14 at episode 2250.
 
-![Experiment%206%20Figure_4.png](attachment:Experiment%206%20Figure_4.png)
+![Experiment%206%20Figure_4.png](Experiment 6 Figure_4.png)
 
 
 A previous experiment with no noise decay resulted in significant worse performance, although still acceptable. See below
 
-![Figure_6.png](attachment:Figure_6.png)
+![Figure_6.png](Figure_6.png)
 
 
 
