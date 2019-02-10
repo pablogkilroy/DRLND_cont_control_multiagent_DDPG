@@ -3,7 +3,7 @@
 
 ![](Experiment_7-15.gif)
 
-##Introduction
+## Introduction
 
 For this project, we train a two tennis agents to play a match
 
@@ -17,7 +17,7 @@ The actions has four dimensions and consists of the torques for each of the join
 
 The task is episodic, and in order to solve the environment, the agent must get an average score of +30 over 100 consecutive episodes.
 
-##Getting started
+## Getting started
 
 1. Download or clone the complete repositoryhttps://github.com/pablogkilroy/DRLND_continuous-control-project-pytorch from Github onto a Windows environment. 
 
@@ -40,10 +40,15 @@ The following folders are part of the repository:
 >conda install --yes --file requirements.txt
 
 4. Alternatively to 2 and 3 install the environment.yml file
-conda env create -f environment.yml
+>conda env create -f environment.yml
 
-##Instructions
+## Instructions
 
 1. Execute the main.py file. 
 2. A plot of the rewards appears every 25 episodes. This can be changed in main.py in the function
 def ddpg(n_episodes=200, max_t=1000, print_every=1, plot_every=25):
+
+
+
+
+
