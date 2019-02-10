@@ -106,18 +106,21 @@ Handling the noise is a critical factor in the performance of the model. I tried
 
 - Constant noise using Ornstein-Uhlenbeck algorithm (mu=0., theta=.15, sigma=0.2)
 
-> x = self.state
-> dx = self.theta * (self.mu - x) + self.sigma *np.random.standard_normal(x.size)
-> self.state = x + dx
+```
+x = self.state
+dx = self.theta * (self.mu - x) + self.sigma *np.random.standard_normal(x.size)
+self.state = x + dx
+```
 
 - Noise decay on Ornstein-Uhlenbeck algorithm (mu=0., theta=.15, sigma=0.2): Introduced a fuction that reduces noise as reward increases. 
 This seems to make learning more stable and faster. 
 
-> decay = (1/2)**(scores_average[i_episode-1]/.1)
-> x = self.state
-> dx = self.theta * (self.mu - x) + self.sigma *np.random.standard_normal(x.size)
-> self.state = x + dx * decay
-
+```
+decay = (1/2)**(scores_average[i_episode-1]/.1)
+x = self.state
+dx = self.theta * (self.mu - x) + self.sigma *np.random.standard_normal(x.size)
+self.state = x + dx * decay
+```
 
 ## Plot of Rewards
 
