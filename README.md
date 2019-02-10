@@ -1,7 +1,7 @@
 # DRLND_continuous-control-project-pytorch
 
 
-(Experiment 7-15.gif)
+![] (Experiment 7-15.gif)
 
 ##Introduction
 
