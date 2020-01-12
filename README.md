@@ -35,6 +35,7 @@ The following folders are part of the repository:
 2. Create a virtual environment using Anaconda prompt 
 (for windows environment) 
 >conda create --name drlnd-p2 python=3.6 
+
 >activate drlnd
 
 3. Install the files in the requirements.txt file:
